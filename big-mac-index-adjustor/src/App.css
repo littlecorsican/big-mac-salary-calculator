@@ -33,3 +33,56 @@
 .overflow-x-auto::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
+
+/* Map styling */
+svg {
+  cursor: pointer;
+}
+
+/* Map container styling */
+.map-container {
+  max-height: 300px;
+  overflow: hidden;
+}
+
+/* Zoom controls styling */
+.zoom-controls button {
+  min-width: 40px;
+}
+
+/* Smooth zoom transitions */
+.map-zoom-container {
+  transition: transform 0.3s ease;
+}
+
+/* Tab styling */
+.tab-button {
+  transition: all 0.2s ease-in-out;
+}
+
+.tab-button:hover {
+  background-color: #f9fafb;
+}
+
+/* Tooltip animations */
+.tooltip-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.tooltip-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.tooltip-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tooltip-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
