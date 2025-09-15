@@ -58,76 +58,176 @@ function App() {
   }
 
   return (
-    <div className="App" style={{display:"flex", flexDirection:"row", justifyContent:"space-around"}}>
-
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Country</th>
-              <th>Big Mac Index</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              data.map((value)=>{
-                return <tr>
-                  <td>{value[0]}</td>
-                  <td>{value[1]}</td>
-                </tr>
-              })
-            }
-          </tbody>
-        </table>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* Header */}
+      <div className="bg-white shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+              🍔 Big Mac Index Salary Calculator
+            </h1>
+            <p className="text-lg text-gray-600">
+              Calculate equivalent salaries across countries using purchasing power parity
+            </p>
+          </div>
+        </div>
       </div>
 
-
-      <div style={{ margin: "4rem", padding: "4rem" }}>
-        <div style={{ padding: "1rem" }}>
-          <label htmlFor='from_country'>From Country:  </label>
-          <select id="from_country" onChange={handleChange} ref={fromCountryRef}>
-          {
-              data.map((value)=>{
-                return <option value={value[0]}>
-                  {value[0]}
-                </option>
-              })
-            }
-          </select>
-        </div>
-        <div style={{ padding: "1rem" }}>
-          <label htmlFor='from_amount'>Amount:  </label>
-          <input type="number" ref={amountRef} id="from_amount" onChange={handleChange} />
-        </div>
-        <div style={{ padding: "1rem" }}>
-          <label htmlFor='to_country'>To Country:  </label>
-          <select id="to_country" onChange={handleChange} ref={toCountryRef}>
-            {
-              data.map((value)=>{
-                return <option value={value[0]}>
-                  {value[0]}
-                </option>
-              })
-            }
-          </select>
-        </div>
-        <button onClick={handleClickTaxCalculator}>{`Turn ${taxCalculatorFlag? "Off" : "On"} tax calculator`}</button>
-        {
-          taxCalculatorFlag && <div>
-            <form>
-              {/* <div style={{ padding: "1rem" }}>
-                <label htmlFor='from_amount'>Amount</label>
-                <input type="number" ref={amountRef} id="from_amount" onChange={handleChange} />
-              </div>
-              <div style={{ padding: "1rem" }}>
-                <label htmlFor='from_amount'>Amount</label>
-                <input type="number" ref={amountRef} id="from_amount" onChange={handleChange} />
-              </div> */}
-            </form>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          {/* Big Mac Index Table */}
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div className="bg-gradient-to-r from-red-500 to-red-600 px-6 py-4">
+              <h2 className="text-2xl font-bold text-white flex items-center">
+                📊 Big Mac Index Data
+              </h2>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Country
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Big Mac Price
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {data.map((value, index) => (
+                    <tr key={index} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {value[0]}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {value[1]}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        }
-        <div style={{ margin: "1rem", padding: "1rem" }}>
-          <label>You should ask for </label><label id="output" ref={outputRef}></label><label> USD to enjoy the same standard of living</label>
+
+          {/* Salary Calculator */}
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div className="bg-gradient-to-r from-green-500 to-green-600 px-6 py-4">
+              <h2 className="text-2xl font-bold text-white flex items-center">
+                💰 Salary Calculator
+              </h2>
+            </div>
+            <div className="p-6 space-y-6">
+              
+              {/* From Country */}
+              <div>
+                <label htmlFor='from_country' className="block text-sm font-medium text-gray-700 mb-2">
+                  From Country
+                </label>
+                <select 
+                  id="from_country" 
+                  onChange={handleChange} 
+                  ref={fromCountryRef}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                >
+                  <option value="">Select a country...</option>
+                  {data.map((value, index) => (
+                    <option key={index} value={value[0]}>
+                      {value[0]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Amount */}
+              <div>
+                <label htmlFor='from_amount' className="block text-sm font-medium text-gray-700 mb-2">
+                  Current Salary Amount
+                </label>
+                <input 
+                  type="number" 
+                  ref={amountRef} 
+                  id="from_amount" 
+                  onChange={handleChange}
+                  placeholder="Enter your salary amount"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                />
+              </div>
+
+              {/* To Country */}
+              <div>
+                <label htmlFor='to_country' className="block text-sm font-medium text-gray-700 mb-2">
+                  To Country
+                </label>
+                <select 
+                  id="to_country" 
+                  onChange={handleChange} 
+                  ref={toCountryRef}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                >
+                  <option value="">Select a country...</option>
+                  {data.map((value, index) => (
+                    <option key={index} value={value[0]}>
+                      {value[0]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Tax Calculator Toggle */}
+              <div className="pt-4 border-t border-gray-200">
+                <button 
+                  onClick={handleClickTaxCalculator}
+                  className={`w-full px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
+                    taxCalculatorFlag 
+                      ? 'bg-red-500 hover:bg-red-600 text-white' 
+                      : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+                  }`}
+                >
+                  {`${taxCalculatorFlag ? '🔴 Turn Off' : '🟢 Turn On'} Tax Calculator`}
+                </button>
+                
+                {taxCalculatorFlag && (
+                  <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <p className="text-sm text-yellow-800">
+                      🚧 Tax calculator feature coming soon!
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Result Display */}
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg border border-blue-200">
+                <div className="text-center">
+                  <p className="text-lg text-gray-700 mb-2">
+                    💡 Equivalent Salary Recommendation:
+                  </p>
+                  <div className="text-3xl font-bold text-blue-600 mb-2">
+                    $<span id="output" ref={outputRef} className="text-4xl">0</span>
+                  </div>
+                  <p className="text-sm text-gray-600">
+                    USD to enjoy the same standard of living
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="bg-white border-t border-gray-200 mt-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="text-center text-sm text-gray-500">
+            <p>
+              Based on The Economist's Big Mac Index • 
+              <a href="https://www.economist.com/big-mac-index" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 ml-1">
+                Learn more about the Big Mac Index
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
